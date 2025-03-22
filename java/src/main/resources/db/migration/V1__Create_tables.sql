@@ -1,0 +1,26 @@
+create table PRODUCTS (
+    ID UUID not null primary key,
+    DESCRIPTION varchar(500) not null
+);
+
+create table CUSTOMERS (
+    ID UUID not null primary key,
+    FIRST_NAME varchar(500) not null,
+    LAST_NAME varchar(500) not null
+);
+
+create table ORDERS (
+    ID UUID not null primary key,
+    ORDER_DATE TIMESTAMP WITH TIME ZONE not null,
+    CUSTOMER_ID UUID not null,
+    PRODUCT_ID UUID not null,
+    CUSTOMER_ID_WITH_INDEX UUID not null,
+    PRODUCT_ID_WITH_INDEX UUID not null,
+    FOREIGN KEY(CUSTOMER_ID) REFERENCES CUSTOMERS (id),
+    FOREIGN KEY(PRODUCT_ID) REFERENCES PRODUCTS (id),
+    FOREIGN KEY(CUSTOMER_ID_WITH_INDEX) REFERENCES CUSTOMERS (id),
+    FOREIGN KEY(PRODUCT_ID_WITH_INDEX) REFERENCES PRODUCTS (id)
+);
+
+create index ORDERS_CUSTOMER_ID_WITH_INDEX on ORDERS(CUSTOMER_ID_WITH_INDEX);
+create index ORDERS_PRODUCT_ID_WITH_INDEX on ORDERS(PRODUCT_ID_WITH_INDEX);

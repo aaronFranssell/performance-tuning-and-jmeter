@@ -1,0 +1,41 @@
+buildscript {
+	dependencies {
+		classpath "org.flywaydb:flyway-database-postgresql:${flywayVersion}"
+	}
+}
+
+plugins {
+	id 'java'
+	id 'jacoco'
+	id 'eclipse'
+	id 'org.springframework.boot' version '3.4.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id "org.flywaydb.flyway" version "${flywayVersion}"
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation "org.flywaydb:flyway-core:${flywayVersion}"
+	runtimeOnly "org.flywaydb:flyway-database-postgresql:${flywayVersion}"
+	implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final'
+	implementation 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+	implementation 'org.springframework:spring-webmvc:6.2.4'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.18.3'
+	implementation 'org.apache.commons:commons-lang3:3.17.0'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+}
