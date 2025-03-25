@@ -4,6 +4,6 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import tuning.models.Customer;
+import tuning.entities.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {}

@@ -19,7 +19,7 @@ services:
     volumes:
       - ./:/home
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:${DB_PORT}/${DB_NAME}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOSTNAME}:${DB_PORT}/${DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_SHOW_SQL: "true"

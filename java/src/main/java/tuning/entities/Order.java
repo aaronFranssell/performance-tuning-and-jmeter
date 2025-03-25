@@ -1,4 +1,4 @@
-package tuning.models;
+package tuning.entities;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

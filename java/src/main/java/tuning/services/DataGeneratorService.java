@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.extern.log4j.Log4j2;
-import tuning.models.Customer;
-import tuning.models.Order;
-import tuning.models.Product;
+import tuning.entities.Customer;
+import tuning.entities.Order;
+import tuning.entities.Product;
 import tuning.repositories.CustomerRepository;
 import tuning.repositories.OrderRepository;
 import tuning.repositories.ProductRepository;
@@ -34,6 +36,9 @@ public class DataGeneratorService {
 	@Autowired
 	CustomerRepository customerRepository;
 	
+    @PersistenceContext
+    private EntityManager entityManager;
+	
 	private SecureRandom secureRandom = new SecureRandom();
 	
 	public void generateData(int numberOfOrders) {
@@ -53,6 +58,7 @@ public class DataGeneratorService {
 				orders.add(generateOrder(customers, products));
 			}
 			orderRepository.saveAllAndFlush(orders);
+			entityManager.clear();
 			log.info("Generated step.");
 		}
 	}

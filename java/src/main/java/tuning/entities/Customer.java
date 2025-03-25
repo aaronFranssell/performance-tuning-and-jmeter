@@ -1,4 +1,4 @@
-package tuning.models;
+package tuning.entities;
 
 import java.util.Set;
 import java.util.UUID;
