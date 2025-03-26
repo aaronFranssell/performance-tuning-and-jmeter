@@ -95,3 +95,4 @@ override.tf.json
 # Ignore system files and directories
 Thumbs.db
 Desktop.ini
+.~lock*
