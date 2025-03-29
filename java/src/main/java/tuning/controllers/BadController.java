@@ -19,9 +19,11 @@ import tuning.entities.Customer;
 import tuning.entities.CustomerOrderProduct;
 import tuning.entities.Order;
 import tuning.entities.OrderMini;
+import tuning.entities.Product;
 import tuning.repositories.BadRepository;
 import tuning.repositories.CustomerRepository;
 import tuning.repositories.OrderMiniRepositoryBad;
+import tuning.repositories.ProductRepository;
 
 @RestController
 @RequestMapping("/bad")
@@ -35,6 +37,9 @@ public class BadController {
 	
 	@Autowired
 	OrderMiniRepositoryBad orderMiniRepositoryBad;
+	
+	@Autowired
+	ProductRepository productRepository;
 	
 	@GetMapping("getCustomerProducts/{customerId}")
 	public ResponseEntity<List<CustomerOrderProduct>> getCustomerProducts(@PathVariable("customerId") UUID customerId) {
@@ -57,5 +62,14 @@ public class BadController {
     public ResponseEntity<List<OrderMini>> getOrdersAfter(@RequestParam("orderDate") OffsetDateTime orderDate) {
     	List<OrderMini> result = orderMiniRepositoryBad.findByOrderDateAfter(orderDate);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @PostMapping("/insertProducts")
+    public ResponseEntity<String> saveProducts(@RequestParam("numberOfProducts") int numberOfProducts) {
+    	//need to test out this method and build insomnia requests in this and goodcontroller
+    	for (int i = 0; i < numberOfProducts; i++) {
+    		productRepository.saveAndFlush(new Product("Widget " + i));
+    	}
+		return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }
