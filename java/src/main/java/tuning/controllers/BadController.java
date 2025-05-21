@@ -41,14 +41,8 @@ public class BadController {
 	@Autowired
 	ProductRepository productRepository;
 	
-	@GetMapping("getCustomerProducts/{customerId}")
-	public ResponseEntity<List<CustomerOrderProduct>> getCustomerProducts(@PathVariable("customerId") UUID customerId) {
-		List<CustomerOrderProduct> result = badRepository.findCustomerProductsByCustomerId(customerId);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-	
     @PostMapping("/writeCustomerProducts/{customerId}")
-    public ResponseEntity<String> getCustomerById(@PathVariable("customerId") UUID customerId) {
+    public ResponseEntity<String> writeCustomerProducts(@PathVariable("customerId") UUID customerId) {
     	Customer customer = customerRepository.findById(customerId).get();
     	String result = "";
     	for(Order order : customer.getOrders()) {
@@ -72,4 +66,10 @@ public class BadController {
     	}
 		return new ResponseEntity<>("OK", HttpStatus.OK);
     }
+    
+	@GetMapping("getCustomerProducts/{customerId}")
+	public ResponseEntity<List<CustomerOrderProduct>> getCustomerProducts(@PathVariable("customerId") UUID customerId) {
+		List<CustomerOrderProduct> result = badRepository.findCustomerProductsByCustomerId(customerId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

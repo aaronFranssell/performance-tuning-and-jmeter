@@ -1,0 +1,63 @@
+Performance talk
+
+Table structure + environment slide
+	Show Enrollments dev/prod database
+
+EXPLAIN
+Query:
+
+select
+c.first_name, c.last_name, o.order_date, p.description
+from
+customers c inner join
+orders o on c.id = o.customer_id inner join
+products p on o.product_id = p.id
+where
+c.id = ''
+
+Run query in dev
+
+Run query in prod, then go back to presentation
+
+EXPLAIN cont cont
+Cost is a relative measure of CPU + I/O, NOT time directly
+In Postgres, cost is highly configurable, but by default a single unit equates to a single 8 kilobyte read from disk into memory.
+The first number is startup cost, which is the estimated cost of reading the first row.
+The 2nd number is total cost, which is the estimate of reading all rows.
+TL/DR big numbers in costs are bad
+A huge jump in startup cost vs total cost is often a sign of where the problem is
+
+Rows are the estimated number of rows returned
+Width is the estimated number of bytes returned
+
+Updated table structure
+
+select
+c.first_name, c.last_name, o.id, o.customer_id, o.product_id, o.order_date, p.description
+from
+customers c inner join
+orders o on o.CUSTOMER_ID_WITH_INDEX = c.id inner join
+products p on o.PRODUCT_ID_WITH_INDEX = p.id
+where c.id = ''
+
+Network optimization
+Grocery store analogy
+
+N + 1 Queries
+Start by showing the models
+Show bad repository
+go to badcontroller
+
+writeCustomerProducts
+	- Pretend someone sends us a customer Id, and we send a CSV back of products we wrote to an API
+
+Fetch Size
+getOrdersAfter
+
+
+Jmeter
+Thread group
+	- Show number of threads (users)
+	- Show duration
+Constant Throughput Timer
+	- Target throughput

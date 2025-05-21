@@ -42,19 +42,12 @@ public class GoodController {
 	@Autowired
 	ProductRepository productRepository;
 	
-	@GetMapping("getCustomerProducts/{customerId}")
-	public ResponseEntity<List<CustomerOrderProduct>> getCustomerProducts(@PathVariable("customerId") UUID customerId) {
-		List<CustomerOrderProduct> result = goodRepository.findCustomerProductsByCustomerId(customerId);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-	
     @PostMapping("/writeCustomerProducts/{customerId}")
-    public ResponseEntity<String> getCustomerById(@PathVariable("customerId") UUID customerId) {
+    public ResponseEntity<String> writeCustomerProducts(@PathVariable("customerId") UUID customerId) {
     	Customer customer = customerRepositoryGood.findByIdWithProducts(customerId);
     	String result = "";
     	for(Order order : customer.getOrders()) {
     		result += order.getProduct().getId() + "," + order.getProduct().getDescription() + "\n";
-    		// Send data via API call to another service
     	}
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -74,4 +67,11 @@ public class GoodController {
     	productRepository.saveAllAndFlush(toInsert);
 		return new ResponseEntity<>("OK", HttpStatus.OK);
     }
+    
+	
+	@GetMapping("getCustomerProducts/{customerId}")
+	public ResponseEntity<List<CustomerOrderProduct>> getCustomerProducts(@PathVariable("customerId") UUID customerId) {
+		List<CustomerOrderProduct> result = goodRepository.findCustomerProductsByCustomerId(customerId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }
